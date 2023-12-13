@@ -4,16 +4,25 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom'
+import { configureStore } from '@reduxjs/toolkit'
+import toDoSlice from './components/ToDoPage/Store/ToDoSlice' 
+import { Provider } from 'react-redux';
 
+
+const myStore = configureStore({
+  reducer: {
+    toDoSlice
+  }
+})
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
      <BrowserRouter>
-      {/* <Provider store={myStore}> */}
+      <Provider store={myStore}>
         
         <App />
-      {/* </Provider> */}
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>
 );
