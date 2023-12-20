@@ -5,13 +5,15 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom'
 import { configureStore } from '@reduxjs/toolkit'
-import toDoSlice from './components/ToDoPage/Store/ToDoSlice' 
+import toDoSlice from './Store/ToDoSlice' 
 import { Provider } from 'react-redux';
+import PostSlice from './Store/PostSlice';
 
 
 const myStore = configureStore({
   reducer: {
-    toDoSlice
+    toDoSlice,
+    PostSlice
   }
 })
 

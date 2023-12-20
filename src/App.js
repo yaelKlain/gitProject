@@ -6,20 +6,22 @@ import { Routes, Route, Link } from 'react-router-dom'
 import ToDo from './components/ToDoPage/ToDo';
 import Home from './components/HomePages/Home';
 // import FormDialog from './components/ToDoPage/DialogAdd';
+import Post from './components/PostPage/Post';
 
 function App() {
   return (
     <div className="App">
-      <ResponsiveAppBar/>
+      <ResponsiveAppBar />
       {/* <Home /> */}
 
       <Routes>
-      
-      <Route path="/" element={<Home />}/>
-        <Route path="ToDo" element={<ToDo />}/>
-        
-        
-        </Routes>
+
+        <Route path="/" element={<Home />} />
+        <Route path="ToDo" element={<ToDo />} />
+        <Route path="Post" element={<Post />} />
+
+
+      </Routes>
     </div>
   );
 }
