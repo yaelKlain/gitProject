@@ -5,36 +5,27 @@ import { useEffect } from "react"
 import { useSelector, useDispatch } from 'react-redux'
 import BasicCard from "./showToDoList"
 
-const ToDo = (props) => {
 
-    const dispatch = useDispatch()
-    const sliceToDo=useSelector((myStore)=>myStore.toDoSlice.toDoList)
+const ToDo = () => {
 
-    
-//     useEffect(()=>{
-        
-//         sliceToDo.map((item) => {
-//            return(
-//             <BasicCard id={item.id} text={item.nameOfTask}  />
-//            )
-//            })
-        
-// },[] )
    
-   
+    const sliceToDo = useSelector((myStore) => myStore.toDoSlice.toDoList)
+    console.log(sliceToDo);
+
     return (
         <>
-        
-            <div style={{display:'flex',flexWrap:'wrap'}}>
+
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                 {
-       sliceToDo.map((item) => {
-           return(
-            <BasicCard id={item.id} text={item.nameOfTask}  />
-           )
-           })
-        }</div>
-       
-          
+                    sliceToDo.map((item) => {
+                        return (
+                            <BasicCard id={item.id} text={item.nameOfTask} />
+                        )
+                    })
+                }
+                </div>
+
+
         </>
     )
 }

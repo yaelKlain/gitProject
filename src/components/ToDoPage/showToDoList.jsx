@@ -15,20 +15,23 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Checkbox from '@mui/material/Checkbox';
+import FormDialog from '../DialogCards';
+// import { useRef } from 'react';
 
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 export default function BasicCard(props) {
 
-    const [open, setOpen] = React.useState(false);
-
+    // const dialogRef = useRef(null);
     const handleClickOpen = () => {
         setOpen(true);
     };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+
+    const [open, setOpen] = React.useState(false);
+
+
+    // console.log(open);
     return (
 
         <Card sx={{ minWidth: 275 }} style={{ margin: 'auto', marginTop: '20px' }}>
@@ -50,34 +53,15 @@ export default function BasicCard(props) {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small" variant="outlined" onClick={handleClickOpen}><EditIcon /></Button>
-                <Button size="small"><DeleteIcon /></Button>
+                <Button size="small" onClick={() => handleClickOpen()}>
+                    {open && <FormDialog text={props.text} id={props.id} />}
+
+                    <EditIcon /></Button>
+                <Button size="small" variant="outlined"
+                ><DeleteIcon /></Button>
             </CardActions>
 
-            <React.Fragment>
 
-                <Dialog open={open} onClose={handleClose}>
-
-                    <DialogContent>
-
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id={props.id}
-                            label={props.text}
-
-                            type="text"
-                            fullWidth
-                            variant="standard"
-                        />
-
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={handleClose}>Save</Button>
-
-                    </DialogActions>
-                </Dialog>
-            </React.Fragment>
         </Card>
     );
 }
