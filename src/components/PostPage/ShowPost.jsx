@@ -38,19 +38,28 @@ export default function BasicCard1(props) {
     const [favoriteIconBasic, setFavoriteIconBasic] = React.useState(true);
 
     const [isExpanded, setExpanded] = useState(false);
-    const [text, setText] = useState("long");
+    // const [text, setText] = useState("long");
 
+    const [longText, setLongText] = React.useState(props.text);
+
+
+    // const [first50, setFirst50] = useState("");
+    // setFirst50(longText.slice(0, 50));
+    const longText1=props.text
+
+    const w=longText1.slice(0, 5);
+    
 
 
     const changeColor = () => {
 
-        console.log("col");
+        
         setFavoriteIconColor(true);
         setFavoriteIconBasic(false)
     }
     const changeColor1 = () => {
 
-        console.log("col");
+       
         setFavoriteIconColor(false);
         setFavoriteIconBasic(true)
     }
@@ -61,30 +70,22 @@ export default function BasicCard1(props) {
         <Card sx={{ minWidth: 275 }} style={{ margin: 'auto', marginTop: '20px' }}>
             <CardContent>
 
-
                 {favoriteIconBasic && <FavoriteBorderIcon onClick={() => { changeColor() }} />}
                 {favoriteIconColor && <FavoriteBorderIcon sx={{ color: red[500] }} onClick={() => { changeColor1() }} />}
 
                 <Typography variant="body2">
-
-
-
                     <div>
                         <p
-                            style={{
-                                width: "100px",
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                                whiteSpace: "nowrap",
-                            }}
+                          
                         >
-                           {props.text}
+                             {isExpanded ? longText: w}
                         </p>
+                        
                         <button onClick={() => setExpanded(!isExpanded)}>
                             {isExpanded ? "less" : "more"}
+                           
                         </button>
-                    </div>
-                    {/* {props.text} */}
+                    </div>                   
                     <br />
 
                 </Typography>
@@ -92,12 +93,7 @@ export default function BasicCard1(props) {
             </CardContent>
             <CardActions>
                 <Button size="small" onClick={() => setOpen(true)}>
-                    {open && <FormDialog text={props.text} ref={dialogRef} />}
-
-
-
-
-
+                    {open && <FormDialog text={longText} ref={dialogRef} />}
                     <EditIcon /></Button>
                 <Button size="small"><DeleteIcon /></Button>
             </CardActions>
