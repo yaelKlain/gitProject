@@ -8,12 +8,14 @@ import { configureStore } from '@reduxjs/toolkit'
 import toDoSlice from './Store/ToDoSlice' 
 import { Provider } from 'react-redux';
 import PostSlice from './Store/PostSlice';
+import userSlice from './Store/UserSlice';
 
 
 const myStore = configureStore({
   reducer: {
     toDoSlice,
-    PostSlice
+    PostSlice,
+    userSlice
   }
 })
 

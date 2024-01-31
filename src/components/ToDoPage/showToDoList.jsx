@@ -16,22 +16,22 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Checkbox from '@mui/material/Checkbox';
 import FormDialog from '../DialogCards';
-// import { useRef } from 'react';
-
+import { toDoDelete } from '../../Store/ToDoSlice';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 export default function BasicCard(props) {
 
-    // const dialogRef = useRef(null);
+    const dispatch=useDispatch()
+    const DeleteItem=()=>{       
+        dispatch(toDoDelete(props.id))        
+    }
+  
     const handleClickOpen = () => {
         setOpen(true);
     };
 
-
     const [open, setOpen] = React.useState(false);
-
-
-    // console.log(open);
+   
     return (
 
         <Card sx={{ minWidth: 275 }} style={{ margin: 'auto', marginTop: '20px' }}>
@@ -54,13 +54,15 @@ export default function BasicCard(props) {
             </CardContent>
             <CardActions>
                 <Button size="small" onClick={() => handleClickOpen()}>
-                    {open && <FormDialog text={props.text} id={props.id} />}
-
+                    {open && <FormDialog text={props.text} id={props.id} createDate={props.createDate} completed={props.completed} page={"editToDo"}/>}
                     <EditIcon /></Button>
-                <Button size="small" variant="outlined"
+
+                    
+
+                    
+                <Button size="small" variant="outlined" onClick={() => DeleteItem(props.id)}                
                 ><DeleteIcon /></Button>
             </CardActions>
-
 
         </Card>
     );
