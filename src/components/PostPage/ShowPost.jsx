@@ -19,38 +19,36 @@ import FormDialog from '../DialogCards';
 import { useRef } from 'react';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { red } from '@mui/material/colors';
-
 import { useState } from 'react';
 import { Icon } from "@mui/material";
 
-// import FormControlLabel from '@mui/material/FormControlLabel';
-
-// import { display } from '@mui/system';
 
 export default function BasicCard1(props) {
 
     const dialogRef = useRef(null);
-
 
     const [open, setOpen] = React.useState(false);
 
     const [favoriteIconColor, setFavoriteIconColor] = React.useState(false);
     const [favoriteIconBasic, setFavoriteIconBasic] = React.useState(true);
 
-    const [isExpanded, setExpanded] = useState(false);
-    const [text, setText] = useState("long");
+    const [isExpanded, setExpanded] = useState(false);   
 
+    const [longText, setLongText] = React.useState(props.text);
+
+    const longText1=props.text
+
+    const w=longText1.slice(0, 5);
+    
 
 
     const changeColor = () => {
-
-        console.log("col");
+        
         setFavoriteIconColor(true);
         setFavoriteIconBasic(false)
     }
     const changeColor1 = () => {
-
-        console.log("col");
+       
         setFavoriteIconColor(false);
         setFavoriteIconBasic(true)
     }
@@ -61,43 +59,28 @@ export default function BasicCard1(props) {
         <Card sx={{ minWidth: 275 }} style={{ margin: 'auto', marginTop: '20px' }}>
             <CardContent>
 
-
                 {favoriteIconBasic && <FavoriteBorderIcon onClick={() => { changeColor() }} />}
                 {favoriteIconColor && <FavoriteBorderIcon sx={{ color: red[500] }} onClick={() => { changeColor1() }} />}
 
                 <Typography variant="body2">
-
-
-
                     <div>
-                        <p
-                            style={{
-                                width: "100px",
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                                whiteSpace: "nowrap",
-                            }}
+                        <p                          
                         >
-                           {props.text}
+                             {isExpanded ? longText: w}
                         </p>
+                        
                         <button onClick={() => setExpanded(!isExpanded)}>
                             {isExpanded ? "less" : "more"}
+                           
                         </button>
-                    </div>
-                    {/* {props.text} */}
+                    </div>                   
                     <br />
 
                 </Typography>
-
             </CardContent>
             <CardActions>
                 <Button size="small" onClick={() => setOpen(true)}>
-                    {open && <FormDialog text={props.text} ref={dialogRef} />}
-
-
-
-
-
+                    {open && <FormDialog text={longText} ref={dialogRef} page={'addPost'} />}
                     <EditIcon /></Button>
                 <Button size="small"><DeleteIcon /></Button>
             </CardActions>

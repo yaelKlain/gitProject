@@ -9,30 +9,76 @@ import DialogTitle from '@mui/material/DialogTitle';
 import BasicCard from './ToDoPage/showToDoList';
 import { editing } from '../Store/ToDoSlice';
 import { useDispatch, useSelector } from 'react-redux'
+import UseGet from '../hooks/useGet';
+import { toDoPut } from '../Store/ToDoSlice';
+import { toDoAdd } from '../Store/ToDoSlice';
+import { PostAdd, postPut } from '../Store/PostSlice';
 
 export default function FormDialog(props) {
   const dispatch = useDispatch()
-
+  const sliceToDo = useSelector((myStore) => myStore.toDoSlice.arr)
 
 
   const [open, setOpen] = React.useState(true);
-  const [inputChange,setInputChange]=React.useState("")
+  const [inputChange, setInputChange] = React.useState("")
 
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
 
   const handleClose = (props) => {
-    setOpen(false);
-    const newToDoItem={
-      newText:inputChange,
-      id:props.id
-    }
-    // dispatch(editing(newToDoItem))
-  };
-  // console.log(inputChange);
 
- 
+    if (props.page == 'addToDo')
+      addIToDo(props)
+    if (props.page == 'addPost')
+      addIPost(props)
+    if (props.page == 'editPost')
+      putIPost(props)
+    if(props.page=='editToDo')
+      putIToDo(props)
+
+  };
+
+  const addIToDo = (props) => {
+    setOpen(false);
+    const newToDoItem = {
+      name: inputChange,
+      createDate: props.createDate,
+      completed: props.completed,
+    }
+    dispatch(toDoAdd(newToDoItem))
+  }
+
+  const addIPost = (props) => {
+    setOpen(false);
+    const newpostItem = {
+      conntect: inputChange,
+      like: props.like,
+    }
+    dispatch(PostAdd(newpostItem))
+  }
+
+  const putIToDo = (props) => {
+    setOpen(false);
+    const newToDoItem = {
+      name: inputChange,
+      createDate: props.createDate,
+      completed: props.completed,
+      id: props.id
+    }
+
+    dispatch(toDoPut(newToDoItem))
+  }
+
+  const putIPost = (props) => {
+    setOpen(false);
+    const newPostItem = {
+      conntect: inputChange,
+      like: props.like,
+      id: props.id
+    }
+
+    dispatch(postPut(newPostItem))
+  }
+
+
   return (
     <React.Fragment>
 
@@ -49,15 +95,15 @@ export default function FormDialog(props) {
             variant="standard"
 
             onChange={(e) => { setInputChange(e.target.value) }}
-            
+
           />
         </DialogContent>
         <DialogActions>
 
           <div className='dialog'>
 
-            <Button onClick={()=>handleClose(props)} >Save</Button>
-           
+            <Button onClick={() => handleClose(props)} >Save</Button>
+
           </div>
 
 
@@ -65,5 +111,5 @@ export default function FormDialog(props) {
       </Dialog>
     </React.Fragment>
   );
-  
+
 }

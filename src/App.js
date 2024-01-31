@@ -8,6 +8,8 @@ import Home from './components/HomePages/Home';
 // import FormDialog from './components/ToDoPage/DialogAdd';
 import Post from './components/PostPage/Post';
 
+import User from './components/UsersPages/User';
+
 function App() {
   return (
     <div className="App">
@@ -19,6 +21,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="ToDo" element={<ToDo />} />
         <Route path="Post" element={<Post />} />
+        <Route path="Users" element={<User />} />
 
 
       </Routes>

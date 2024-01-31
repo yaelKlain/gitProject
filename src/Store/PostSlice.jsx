@@ -1,16 +1,46 @@
 import { createSlice } from '@reduxjs/toolkit'
-const initVal = {
-    postList: [
-        { nameOfTask: "Here is a short passage in English:The sun was setting over the horizon, casting a fiery glow across the sky. This passage is only 10 words long, but it still conveys a sense of beauty and tranquility. The setting sun is a common symbol of hope and new beginnings, and the fiery glow across the sky suggests a sense of excitement and possibility. Here is another one:The ocean was a vast and endless expanse of blue. ", writer: "maya", id: 0},
-        { nameOfTask: "children-about-themself", writer: "rachel", id: 1},
-        { nameOfTask: "gig-boysiiiiiiiiiiiii", writer: "chava", id: 2 }
+import UseGet from '../hooks/useGet'
+import UsePut from '../hooks/usePut'
+import UsePost from '../hooks/usePost'
+import UseDelete from '../hooks/useDelete'
 
-    ]
+const postlist = {    
+        arr: []    
 }
-const PostSlice = createSlice({
+
+const postSlice = createSlice({
     name: "postList",
-    initialState: initVal,
-   
+    initialState: postlist,
+    reducers:{
+
+        postGet: (state, actions) => {
+            const [httpGet, res] = UseGet()
+            httpGet('https://localhost:7149/PostGet')
+            state.arr = res
+        },
+
+        postPut: (state, action) => {
+
+            const httpPut= UsePut()   
+            console.log();       
+            httpPut('https://localhost:7149/PostPut'+action.payload.id,action.payload)
+        },
+
+        PostDelete: (state, action) => {
+          
+            const httpDelete = UseDelete()              
+            httpDelete('https://localhost:7149/PostDelete'+action.payload)   
+        }
+        ,
+
+        PostAdd: (state, action) => {
+          
+            const httpPost = UsePost()              
+            httpPost('https://localhost:7149/PostsPost',action.payload)   
+        }      
+        
+    }          
+        
 })
-export const { showToDoList } = PostSlice.actions
-export default PostSlice.reducer
+export const { postGet ,postPut,PostDelete,PostAdd} = postSlice.actions
+export default postSlice.reducer

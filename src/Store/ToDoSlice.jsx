@@ -1,59 +1,50 @@
+  import UseGet from '../hooks/useGet'
 import { createSlice } from '@reduxjs/toolkit'
-const initVal = {
-    toDoList: [
-        { nameOfTask: "my-life", writer: "maya", id: 0, price: 43 },
-        { nameOfTask: "children-about-themself", writer: "rachel", id: 1, price: 76 },
-        { nameOfTask: "gig-boys", writer: "chava", id: 2, price: 89 }
-    ]
+import UseDelete from '../hooks/useDelete'
+import UsePut from '../hooks/usePut'
+import UsePost from '../hooks/usePost'
+const toDoList = {
+    arr: []
 }
+
 const toDoSlice = createSlice({
     name: "toDoList",
-    initialState: initVal,
-    reducers:{
+    initialState: toDoList,
+    reducers: {
 
-    editing: (state,action)=>{   
-      
-        state.todoArr.map((item) => {
-            console.log(action);
+        todoGet: (state, actions) => {
+            const [httpGet, res] = UseGet()
+            httpGet('https://localhost:7149/ToDoGet')
+            state.arr = res
+        },
 
-            if (item.id === action.payload.id) {
-                item.nameOfTask = action.payload.inputChange;
-                console.log(item.nameOfTask);
+        toDoPut: (state, action) => {
 
-            }
+            const httpPut= UsePut()          
+            httpPut('https://localhost:7149/ToDoPut'+action.payload.id,action.payload)
+        },
 
-            console.log(state.toDoList);
-            
-        })
-
-        console.log('editing');   
-
-        
-    },
-
-    deleteItem: (state,action)=>{   
-      
-        state.todoArr.map((item) => {
-            console.log(action);
-
-            if (item.id === action.payload.id) {
-                item=null;
-                console.log(item.nameOfTask);
-
-            }
-
-            console.log(state.toDoList);
+        toDoDelete: (state, action) => {
           
-        })
+            const httpDelete = UseDelete()              
+            httpDelete('https://localhost:7149/ToDoDelete'+action.payload)   
+        }
+        ,
 
-        console.log('editing');   
-
-        
+        toDoAdd: (state, action) => {
+          
+            const httpPost = UsePost()              
+            httpPost('https://localhost:7149/ToDoPost',action.payload)   
+        }
     }
-}
 
- 
-    
 })
-export const { editing ,deleteItem} = toDoSlice.actions
+export const { toDoPut, toDoDelete,todoGet ,toDoAdd} = toDoSlice.actions
 export default toDoSlice.reducer
+
+
+
+
+
+
+
