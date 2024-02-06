@@ -12,25 +12,19 @@ import { useDispatch, useSelector } from 'react-redux'
 import UseGet from '../hooks/useGet';
 import { toDoPut } from '../Store/ToDoSlice';
 import { toDoAdd } from '../Store/ToDoSlice';
-import { PostAdd, postPut } from '../Store/PostSlice';
 
-export default function FormDialog(props) {
+export default function FormDialogToDo(props) {
   const dispatch = useDispatch()
   const sliceToDo = useSelector((myStore) => myStore.toDoSlice.arr)
 
-
   const [open, setOpen] = React.useState(true);
   const [inputChange, setInputChange] = React.useState("")
-
 
   const handleClose = (props) => {
 
     if (props.page == 'addToDo')
       addIToDo(props)
-    if (props.page == 'addPost')
-      addIPost(props)
-    if (props.page == 'editPost')
-      putIPost(props)
+  
     if(props.page=='editToDo')
       putIToDo(props)
 
@@ -46,15 +40,6 @@ export default function FormDialog(props) {
     dispatch(toDoAdd(newToDoItem))
   }
 
-  const addIPost = (props) => {
-    setOpen(false);
-    const newpostItem = {
-      conntect: inputChange,
-      like: props.like,
-    }
-    dispatch(PostAdd(newpostItem))
-  }
-
   const putIToDo = (props) => {
     setOpen(false);
     const newToDoItem = {
@@ -63,27 +48,12 @@ export default function FormDialog(props) {
       completed: props.completed,
       id: props.id
     }
-
     dispatch(toDoPut(newToDoItem))
   }
 
-  const putIPost = (props) => {
-    setOpen(false);
-    const newPostItem = {
-      conntect: inputChange,
-      like: props.like,
-      id: props.id
-    }
-
-    dispatch(postPut(newPostItem))
-  }
-
-
   return (
     <React.Fragment>
-
       <Dialog open={open} >
-
         <DialogContent>
           <TextField
             autoFocus
@@ -93,7 +63,6 @@ export default function FormDialog(props) {
             type="text"
             fullWidth
             variant="standard"
-
             onChange={(e) => { setInputChange(e.target.value) }}
 
           />
@@ -101,11 +70,8 @@ export default function FormDialog(props) {
         <DialogActions>
 
           <div className='dialog'>
-
             <Button onClick={() => handleClose(props)} >Save</Button>
-
           </div>
-
 
         </DialogActions>
       </Dialog>

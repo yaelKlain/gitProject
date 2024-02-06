@@ -22,7 +22,7 @@ const postSlice = createSlice({
         postPut: (state, action) => {
 
             const httpPut= UsePut()   
-            console.log();       
+            // console.log();       
             httpPut('https://localhost:7149/PostPut'+action.payload.id,action.payload)
         },
 
@@ -30,15 +30,12 @@ const postSlice = createSlice({
           
             const httpDelete = UseDelete()              
             httpDelete('https://localhost:7149/PostDelete'+action.payload)   
-        }
-        ,
-
-        PostAdd: (state, action) => {
-          
+        },
+        
+        PostAdd: (state, action) => {                   
             const httpPost = UsePost()              
             httpPost('https://localhost:7149/PostsPost',action.payload)   
-        }      
-        
+        }             
     }          
         
 })

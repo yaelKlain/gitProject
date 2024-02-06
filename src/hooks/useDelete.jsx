@@ -11,8 +11,6 @@ const UseDelete = () => {
             console.error(error)
         }
     }
-
     return Delete
 }
-
 export default UseDelete
