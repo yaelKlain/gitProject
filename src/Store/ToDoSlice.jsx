@@ -28,8 +28,7 @@ const toDoSlice = createSlice({
           
             const httpDelete = UseDelete()              
             httpDelete('https://localhost:7149/ToDoDelete'+action.payload)   
-        }
-        ,
+        },
 
         toDoAdd: (state, action) => {
           
@@ -37,7 +36,6 @@ const toDoSlice = createSlice({
             httpPost('https://localhost:7149/ToDoPost',action.payload)   
         }
     }
-
 })
 export const { toDoPut, toDoDelete,todoGet ,toDoAdd} = toDoSlice.actions
 export default toDoSlice.reducer

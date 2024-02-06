@@ -1,29 +1,25 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { useSelector, useDispatch } from 'react-redux'
+import {  useDispatch } from 'react-redux'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Checkbox from '@mui/material/Checkbox';
-import FormDialog from '../DialogCards';
 import { useRef } from 'react';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { red } from '@mui/material/colors';
 import { useState } from 'react';
-import { Icon } from "@mui/material";
-
+import FormDialogPost from "../../DialogCardsPost"
+import { PostDelete } from '../../Store/PostSlice';
 
 export default function BasicCard1(props) {
+    const dispatch = useDispatch()
+
+    const DeleteItem=()=>{       
+        dispatch(PostDelete(props.id))        
+    }
 
     const dialogRef = useRef(null);
 
@@ -37,35 +33,33 @@ export default function BasicCard1(props) {
     const [longText, setLongText] = React.useState(props.text);
 
     const longText1=props.text
-
     const w=longText1.slice(0, 5);
-    
 
+    const onClose = () => {
+        setOpen(false)
+    } 
 
-    const changeColor = () => {
-        
+    const changeColor = () => {        
         setFavoriteIconColor(true);
         setFavoriteIconBasic(false)
     }
+
     const changeColor1 = () => {
        
         setFavoriteIconColor(false);
         setFavoriteIconBasic(true)
     }
 
-
     return (
 
         <Card sx={{ minWidth: 275 }} style={{ margin: 'auto', marginTop: '20px' }}>
             <CardContent>
-
                 {favoriteIconBasic && <FavoriteBorderIcon onClick={() => { changeColor() }} />}
                 {favoriteIconColor && <FavoriteBorderIcon sx={{ color: red[500] }} onClick={() => { changeColor1() }} />}
-
                 <Typography variant="body2">
                     <div>
-                        <p                          
-                        >
+                        <p>                      
+                        
                              {isExpanded ? longText: w}
                         </p>
                         
@@ -75,16 +69,14 @@ export default function BasicCard1(props) {
                         </button>
                     </div>                   
                     <br />
-
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small" onClick={() => setOpen(true)}>
-                    {open && <FormDialog text={longText} ref={dialogRef} page={'addPost'} />}
+                <Button size="small" onClick={() => setOpen(true)}>                    
                     <EditIcon /></Button>
-                <Button size="small"><DeleteIcon /></Button>
+                    {open && <FormDialogPost openFunc={onClose} text={longText} ref={dialogRef} page={"edit"} id={props.id}/>}
+                <Button size="small" onClick={() => DeleteItem(props)}><DeleteIcon /></Button>
             </CardActions>
-
 
         </Card>
     );

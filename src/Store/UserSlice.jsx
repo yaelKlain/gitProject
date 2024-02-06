@@ -1,46 +1,41 @@
 import { createSlice } from '@reduxjs/toolkit'
-const initVal = {
-    UserList: [
-        { nameOfTask: "my-life", writer: "maya", id: 0, price: 43 },
-        { nameOfTask: "children-about-themself", writer: "rachel", id: 1, price: 76 },
-        { nameOfTask: "gig-boys", writer: "chava", id: 2, price: 89 }
-    ]
+import UseGet from '../hooks/useGet'
+import UsePost from '../hooks/usePost'
+import UsePut from '../hooks/usePut'
+import UseDelete from '../hooks/useDelete'
+
+const userList = {
+    arr: []
 }
+
 const userSlice = createSlice({
-    name: "UserList",
-    initialState: initVal,
+    name: "userList",
+    initialState: userList,
     reducers:{
+        UserGet: (state, actions) => {
+            const [httpGet, res] = UseGet()
+            httpGet('https://localhost:7149/UserGet')
+            state.arr = res
+        },
 
-        UserEditing: (state,action)=>{   
-      
-        state.UserList.map((item) => {            
+        UserPut: (state, action) => {
 
-            if (item.id === action.payload.id) {
-                item.nameOfTask = action.payload.inputChange;              
+            const httpPut= UsePut()          
+            httpPut('https://localhost:7149/UserPut'+action.payload.id,action.payload)
+        },
 
-            }           
-            
-        })    
-
-        
-    },
-
-    UserListDeleteItem: (state,action)=>{   
-      
-        state.UserList.map((item) => {           
-
-            if (item.id === action.payload.id) {
-                item=null;              
-
-            }         
+        UserDelete: (state, action) => {
           
-        })    
+            const httpDelete = UseDelete()              
+            httpDelete('https://localhost:7149/UserDelete'+action.payload)   
+        },       
 
-        
-    }
-}
- 
-    
+        UserAdd: (state, action) => {
+          
+            const httpPost = UsePost()              
+            httpPost('https://localhost:7149/UsersPost',action.payload)   
+        }
+    }           
 })
-export const { UserEditing ,UserListDeleteItem} = userSlice.actions
+export const { UserGet ,UserPut,UserDelete,UserAdd} = userSlice.actions
 export default userSlice.reducer

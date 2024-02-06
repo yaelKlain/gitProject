@@ -1,52 +1,43 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import { useSelector, useDispatch } from 'react-redux'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Checkbox from '@mui/material/Checkbox';
-import FormDialog from '../DialogCards';
 import { useRef } from 'react';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { red } from '@mui/material/colors';
-
-import { useState } from 'react';
-import { Icon } from "@mui/material";
-
-
+import { UserDelete } from '../../Store/UserSlice';
+import FormDialogUser from '../DialogUser';
 
 export default function BasicCard1(props) {
-
+    const dispatch=useDispatch()
+    const DeleteItem=()=>{       
+        dispatch(UserDelete(props.id))        
+    }
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
 
     const dialogRef = useRef(null);
-
-
     const [open, setOpen] = React.useState(false); 
 
     return (
         <Card sx={{ minWidth: 275 }} style={{ margin: 'auto', marginTop: '20px' }}>
-            <CardContent>              
-
-                {props.text}
+            <CardContent>                          
+                <div>{props.text.email}</div>
+                <div>{props.text.phone}</div>
+                <div>{props.text.name}</div>
+                <div>{props.text.address}</div>               
 
             </CardContent>
             <CardActions>
-                <Button size="small" onClick={() => setOpen(true)}>
-                    {open && <FormDialog text={props.text} ref={dialogRef} />}
+                <Button size="small" onClick={() => handleClickOpen(true)}>                    
                     <EditIcon /></Button>
-                <Button size="small"><DeleteIcon /></Button>
+                    {open && <FormDialogUser text={props.text.name} id={props.id} email={props.text.email} phone={props.text.phone} address={props.text.address} page={"editUser"}/>}
+                <Button size="small" variant="outlined" onClick={() => DeleteItem(props.id)}                
+                ><DeleteIcon /></Button>
             </CardActions>
-
         </Card>
     );
 }
